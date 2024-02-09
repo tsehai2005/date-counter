@@ -14,28 +14,41 @@ function Counter() {
   date.setDate(date.getDate() + count);
   const formatedDate = date.toDateString();
 
-  function decrementStep() {
-    if (step > 0) setStep((s) => s - 1);
-  }
-  function incrementStep() {
-    setStep((s) => s + 1);
-  }
+  // function decrementStep() {
+  //   if (step > 0) setStep((s) => s - 1);
+  // }
+  // function incrementStep() {
+  //   setStep((s) => s + 1);
+  // }
   function decrementCount() {
     if (count > 0) setCount((c) => (c - step > 0 ? c - step : 0));
   }
   function incrementCount() {
     setCount((c) => c + step);
   }
+  function handleReset() {
+    setCount(0);
+    setStep(1);
+  }
   return (
     <div>
       <div>
-        <button onClick={decrementStep}>-</button>
-        <span> Step: {step}</span>
-        <button onClick={incrementStep}>+</button>
+        <input
+          type="range"
+          max="10"
+          min="1"
+          value={step}
+          onChange={(e) => setStep(Number(e.target.value))}
+        />
+        <span>Step:{step}</span>
       </div>
       <div>
         <button onClick={decrementCount}>-</button>
-        <span>Count: {count}</span>
+        <input
+          type="text"
+          value={count}
+          onChange={(e) => setCount(Number(e.target.value))}
+        />
         <button onClick={incrementCount}>+</button>
       </div>
       <div>
@@ -47,6 +60,11 @@ function Counter() {
           </p>
         )}
       </div>
+      {count !== 0 || step !== 1 ? (
+        <div>
+          <button onClick={handleReset}>Reset</button>
+        </div>
+      ) : null}
     </div>
   );
 }
